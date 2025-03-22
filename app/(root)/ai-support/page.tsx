@@ -1,9 +1,12 @@
+import { EmotionalSupportAssistant } from '@/components/pages/ai-support/assistant'
 import React from 'react'
 
 type Props = {}
 
-export default function page({}: Props) {
+export default function page({ }: Props) {
   return (
-    <div>ai support page</div>
+    <div className='h-fit w-full'>
+      <EmotionalSupportAssistant />
+    </div>
   )
 }
