@@ -72,6 +72,7 @@ model LegalAnswer {
   @@schema("public")
 }
 
+
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -81,8 +82,27 @@ model User {
   accounts      Account[]
   answers       LegalAnswer[]
   questions     LegalQuestion[]
-  sessions      Session[]
-  UserProfile   UserProfile?
+  answers       LegalAnswer[]
+  profile       UserProfile?
+
+  @@schema("public")
+}
+
+model UserProfile {
+  id             String    @id @default(cuid())
+  userId         String    @unique
+  age            Int?
+  gender         Gender?
+  maritalStatus  MaritalStatus?
+  occupation     String?
+  income         IncomeRange?
+  education      EducationLevel?
+  hasChildren    Boolean?
+  residenceType  ResidenceType?
+  location       String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@schema("public")
 }
@@ -191,6 +211,62 @@ enum MaritalStatus {
   SEPARATED
   WIDOWED
   DOMESTIC_PARTNERSHIP
+  PREFER_NOT_TO_SAY
+
+  @@schema("public")
+}
+
+enum ResidenceType {
+  OWNED
+  RENTED
+  LIVING_WITH_FAMILY
+  OTHER
+  PREFER_NOT_TO_SAY
+
+  @@schema("public")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  NON_BINARY
+  OTHER
+  PREFER_NOT_TO_SAY
+
+  @@schema("public")
+}
+
+enum MaritalStatus {
+  SINGLE
+  MARRIED
+  DIVORCED
+  SEPARATED
+  WIDOWED
+  DOMESTIC_PARTNERSHIP
+  PREFER_NOT_TO_SAY
+
+  @@schema("public")
+}
+
+enum IncomeRange {
+  UNDER_25K
+  BETWEEN_25K_50K
+  BETWEEN_50K_75K
+  BETWEEN_75K_100K
+  OVER_100K
+  PREFER_NOT_TO_SAY
+
+  @@schema("public")
+}
+
+enum EducationLevel {
+  HIGH_SCHOOL
+  ASSOCIATES_DEGREE
+  BACHELORS_DEGREE
+  MASTERS_DEGREE
+  DOCTORAL_DEGREE
+  PROFESSIONAL_DEGREE
+  OTHER
   PREFER_NOT_TO_SAY
 
   @@schema("public")

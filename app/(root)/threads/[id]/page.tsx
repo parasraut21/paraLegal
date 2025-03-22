@@ -63,6 +63,11 @@ export default async function QuestionDetailPage({ params }: { params: paramsTyp
                     Ask a Question
                   </a>
                 </li>
+                <li>
+                  <a href="/profile" className="hover:text-blue-300">
+                    Your Profile
+                  </a>
+                </li>
               </ul>
             </nav>
           </div>

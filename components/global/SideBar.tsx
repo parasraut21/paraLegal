@@ -1,37 +1,58 @@
-import { BookOpen, Brain, HeartHandshake, Home, MessageSquareText } from "lucide-react"
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
-import { auth, signOut } from "@/lib/auth"
-import { Button } from "../ui/button"
-import Link from "next/link"
+import {
+  BookOpen,
+  Brain,
+  HeartHandshake,
+  Home,
+  MessageSquareText,
+} from "lucide-react";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@/components/ui/sidebar";
+import { auth, signOut } from "@/lib/auth";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 // Menu items.
 const items = [
-    {
-        title: "Dashboard",
-        url: "/dashboard",
-        icon: Home,
-    },
-    {
-        title: "Ai Chat",
-        url: "/ai-chat",
-        icon: Brain,
-    },
-    {
-        title: "learnings",
-        url: "/learn",
-        icon: BookOpen,
-    },
-    {
-        title: "Threads",
-        url: "/threads",
-        icon: MessageSquareText,
-    },
-    {
-        title: "Ai Support",
-        url: "/ai-support",
-        icon: HeartHandshake,
-    },
-]
+  {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: Home,
+  },
+  {
+    title: "Ai Chat",
+    url: "/ai-chat",
+    icon: Brain,
+  },
+  {
+    title: "learnings",
+    url: "/learn",
+    icon: BookOpen,
+  },
+  {
+    title: "Threads",
+    url: "/threads",
+    icon: MessageSquareText,
+  },
+  {
+    title: "Ai Support",
+    url: "/ai-support",
+    icon: HeartHandshake,
+  },
+  {
+    title: "Profile",
+    url: "/profile",
+    icon: Home
+  },
+];
 
 export async function SidebarMain() {
     const session = await auth()
