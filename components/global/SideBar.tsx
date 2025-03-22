@@ -40,7 +40,7 @@ export async function SidebarMain() {
             <SidebarContent>
                 <SidebarGroup className="h-full">
                     <SidebarHeader>
-                        <h1 className="text-3xl font-bold text-teal">Para Learn</h1>
+                        <h1 className="text-3xl font-bold text-teal">Para Legal</h1>
                     </SidebarHeader>
                     <SidebarGroupContent className="pt-6">
                         <SidebarMenu>

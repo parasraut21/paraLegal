@@ -13,7 +13,6 @@ export async function getNews() {
 
     // Construct the API URL with parameters
     const apiUrl = `${BASE_URL}?apikey=${API_KEY}&q=${encodeURIComponent(keywords)}&country=${country}`;
-    console.log(apiUrl);
 
     const response = await fetch(apiUrl);
 
@@ -64,7 +63,6 @@ export async function getNews() {
         }
       })
     );
-    console.log(processedResults[0]);
 
     return processedResults;
   } catch (error) {

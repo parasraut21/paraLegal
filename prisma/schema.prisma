@@ -41,36 +41,37 @@ model Session {
 }
 
 model LegalQuestion {
-  id           String         @id @default(cuid())
-  title        String
-  content      String
-  created_at   DateTime       @default(now())
-  updated_at   DateTime       @updatedAt
-  userId       String?
-  user         User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
-  answers      LegalAnswer[]
-  topic        LegalTopics
-  upvotes      Int            @default(0)
-  downvotes    Int            @default(0)
+  id         String        @id @default(cuid())
+  title      String
+  content    String
+  created_at DateTime      @default(now())
+  updated_at DateTime      @updatedAt
+  userId     String?
+  topic      LegalTopics
+  upvotes    Int           @default(0)
+  downvotes  Int           @default(0)
+  answers    LegalAnswer[]
+  user       User?         @relation(fields: [userId], references: [id])
 
   @@schema("public")
 }
 
 model LegalAnswer {
-  id           String        @id @default(cuid())
-  content      String
-  created_at   DateTime      @default(now())
-  updated_at   DateTime      @updatedAt
-  userId       String?
-  user         User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
-  questionId   String
-  question     LegalQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  upvotes      Int           @default(0)
-  downvotes    Int           @default(0)
-  isAccepted   Boolean       @default(false)
+  id         String        @id @default(cuid())
+  content    String
+  created_at DateTime      @default(now())
+  updated_at DateTime      @updatedAt
+  userId     String?
+  questionId String
+  upvotes    Int           @default(0)
+  downvotes  Int           @default(0)
+  isAccepted Boolean       @default(false)
+  question   LegalQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  user       User?         @relation(fields: [userId], references: [id])
 
   @@schema("public")
 }
+
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -78,9 +79,10 @@ model User {
   emailVerified DateTime?
   image         String?
   accounts      Account[]
-  sessions      Session[]
-  questions     LegalQuestion[]
   answers       LegalAnswer[]
+  questions     LegalQuestion[]
+  sessions      Session[]
+  UserProfile   UserProfile?
 
   @@schema("public")
 }
@@ -95,15 +97,15 @@ model VerificationToken {
 }
 
 model QuizQuestions {
-  id       String      @id @default(cuid())
-  question String
-  option1  String
-  option2  String
-  option3  String
-  option4  String
-  correct  Int
+  id          String      @id @default(cuid())
+  question    String
+  option1     String
+  option2     String
+  option3     String
+  option4     String
+  correct     Int
   explanation String?
-  topic    LegalTopics
+  topic       LegalTopics
 
   @@schema("public")
 }
@@ -117,6 +119,25 @@ model Quiz {
   @@schema("public")
 }
 
+model UserProfile {
+  id            String          @id
+  userId        String          @unique
+  age           Int?
+  gender        Gender?
+  maritalStatus MaritalStatus?
+  occupation    String?
+  income        IncomeRange?
+  education     EducationLevel?
+  hasChildren   Boolean?
+  residenceType ResidenceType?
+  location      String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime
+  User          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("public")
+}
+
 enum LegalTopics {
   CONSTITUTIONAL_RIGHTS_AND_REMEDIES
   CRIMINAL_JUSTICE_SYSTEM
@@ -125,6 +146,62 @@ enum LegalTopics {
   CONSUMER_AND_DIGITAL_PROTECTION
   EMPLOYMENT_AND_LABOUR_RIGHTS
   EVERYDAY_LEGAL_PROCEDURES
+
+  @@schema("public")
+}
+
+enum EducationLevel {
+  HIGH_SCHOOL
+  ASSOCIATES_DEGREE
+  BACHELORS_DEGREE
+  MASTERS_DEGREE
+  DOCTORAL_DEGREE
+  PROFESSIONAL_DEGREE
+  OTHER
+  PREFER_NOT_TO_SAY
+
+  @@schema("public")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  NON_BINARY
+  OTHER
+  PREFER_NOT_TO_SAY
+
+  @@schema("public")
+}
+
+enum IncomeRange {
+  UNDER_25K
+  BETWEEN_25K_50K
+  BETWEEN_50K_75K
+  BETWEEN_75K_100K
+  OVER_100K
+  PREFER_NOT_TO_SAY
+
+  @@schema("public")
+}
+
+enum MaritalStatus {
+  SINGLE
+  MARRIED
+  DIVORCED
+  SEPARATED
+  WIDOWED
+  DOMESTIC_PARTNERSHIP
+  PREFER_NOT_TO_SAY
+
+  @@schema("public")
+}
+
+enum ResidenceType {
+  OWNED
+  RENTED
+  LIVING_WITH_FAMILY
+  OTHER
+  PREFER_NOT_TO_SAY
 
   @@schema("public")
 }
