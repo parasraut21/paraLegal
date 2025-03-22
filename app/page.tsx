@@ -1,25 +1,12 @@
-'use client';
-
-import Image from 'next/image';
-import React, { Suspense } from 'react';
-import spinner from "@/public/spinner.svg";
-import Link from 'next/link';
+import React from 'react';
+import { redirect } from 'next/navigation';
+import { auth } from '@/lib/auth';
 
 
-export default function Index() {
+export default async function Index() {
+  const session = await auth()
+  if (!session) redirect("/auth")
   return (
-    <Suspense fallback={<div className=" w-full flex justify-center items-center">
-      <Image src={spinner} alt="Loading..." width={50} height={50} />
-    </div>}>
-      <div className="bg-[#282828] pt-10">
-        <Link href='sign-in'>
-          Sign In
-        </Link>
-
-        <Link href='sign-up'>
-          Sign Up
-        </Link>
-      </div>
-    </Suspense>
+    <div className='min-h-screen w-full flex justify-center items-center'>home page</div>
   );
 }
