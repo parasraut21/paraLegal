@@ -1,6 +1,7 @@
 import { db } from '@/lib/auth/db';
 import AnswerForm from '@/components/AnswerForm';
 import { auth } from '@/lib/auth';
+import Link from 'next/link';
 
 export type paramsType = Promise<{ id: string }>;
 export default async function QuestionDetailPage({ params }: { params: paramsType }) {
@@ -54,12 +55,12 @@ export default async function QuestionDetailPage({ params }: { params: paramsTyp
                   </a>
                 </li>
                 <li>
-                  <a href="/questions" className="hover:text-blue-300">
+                  <a href="/threads" className="hover:text-blue-300">
                     Browse Questions
                   </a>
                 </li>
                 <li>
-                  <a href="/threads" className="hover:text-blue-300">
+                  <a href="/threads/new" className="hover:text-blue-300">
                     Ask a Question
                   </a>
                 </li>
@@ -78,9 +79,9 @@ export default async function QuestionDetailPage({ params }: { params: paramsTyp
       <main className="py-12">
         <div className="container mx-auto px-4">
           <div className="mb-8">
-            <a href="/questions" className="text-blue-600 hover:text-blue-800">
+            <Link href="/threads" className="text-blue-600 hover:text-blue-800">
               ← Back to all questions
-            </a>
+            </Link>
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6 mb-8">

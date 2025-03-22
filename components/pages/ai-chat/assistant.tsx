@@ -1,14 +1,18 @@
 "use client";
 
 import { Thread } from "@/components/ui/thread";
-import { ThreadList } from "@/components/ui/thread-list";
 import { AssistantRuntimeProvider, WebSpeechSynthesisAdapter } from "@assistant-ui/react";
 import { useChatRuntime } from "@assistant-ui/react-ai-sdk";
 
 
-export const Assistant = () => {
+export const Assistant = ({user , userName} :{user : any , userName : string}) => {
+
   const runtime = useChatRuntime({
     api: "/api/chat",
+    body:{
+      user : user,
+      userName : userName
+    },
     adapters: {
       speech: new WebSpeechSynthesisAdapter(),
     },

@@ -1,48 +1,19 @@
-"use client";
+import Link from 'next/link';
+import { db } from '@/lib/auth/db';
 
-import { useState } from 'react';
-
-import { useRouter } from 'next/navigation';
-import { submitLegalQuestion } from '@/actions/threads/legal-questions';
-import { Button } from '@/components/ui/button';
-
-const AskQuestionPage = () => {
-  const [question, setQuestion] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
-  const router = useRouter();
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError('');
-
-    try {
-      const formData = new FormData();
-      formData.append('question', question);
-      
-      const result = await submitLegalQuestion(formData);
-      
-      if (result.success) {
-        console.log('Question submitted:', question);
-        setQuestion('');
-        alert('Question submitted successfully!');
-        // Redirect to questions page or the specific question
-        if (result.questionId) {
-          router.push(`/threads/${result.questionId}`);
-        } else {
-          router.push('/questions');
-        }
-      } else {
-        setError(result.message);
+export default async function QuestionsPage() {
+  const questions = await db.legalQuestion.findMany({
+    orderBy: {
+      created_at: 'desc'
+    },
+    include: {
+      user: true,
+      _count: {
+        select: { answers: true }
       }
-    } catch (err) {
-      setError('Failed to submit question. Please try again.');
-      console.error(err);
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
+    },
+    take: 50
+  });
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -61,46 +32,49 @@ const AskQuestionPage = () => {
         </div>
       </header>
 
-      <section className="py-16">
+      <main className="py-12">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-            <h2 className="text-3xl font-bold mb-6 text-center">Ask Your Legal Question</h2>
-            <p className="text-gray-600 mb-6 text-center">Get answers from our community of legal experts and fellow users</p>
-            
-            {error && (
-              <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-lg">
-                {error}
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-3xl font-bold">Legal Questions</h1>
+            <Link href="/threads/new" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg">
+              Ask a Question
+            </Link>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-md">
+            {questions.map((question) => (
+              <div key={question.id} className="border-b border-gray-200 p-6 hover:bg-gray-50">
+                <Link href={`/threads/id/${question.id}`} className="block">
+                  <h2 className="text-xl font-semibold mb-2 text-blue-800 hover:text-blue-600">
+                    {question.title}
+                  </h2>
+                  <p className="text-gray-600 mb-4 line-clamp-2">{question.content}</p>
+                  <div className="flex items-center text-sm text-gray-500">
+                    <span className="mr-4">
+                      Posted by {question.user?.name || 'Anonymous'} • {new Date(question.created_at).toLocaleDateString()}
+                    </span>
+                    <span className="mr-4">
+                      {question._count.answers} {question._count.answers === 1 ? 'answer' : 'answers'}
+                    </span>
+                    <span className="px-2 py-1 text-xs rounded-full bg-gray-100">
+                      {question.topic.replace(/_/g, ' ').toLowerCase()}
+                    </span>
+                  </div>
+                </Link>
+              </div>
+            ))}
+
+            {questions.length === 0 && (
+              <div className="py-12 text-center">
+                <p className="text-gray-500 mb-4">No questions have been asked yet.</p>
+                <Link href="/threads/new" className="text-blue-600 hover:text-blue-800 font-medium">
+                  Be the first to ask a question
+                </Link>
               </div>
             )}
-            
-            <form onSubmit={handleSubmit}>
-              <div className="mb-6">
-                <label htmlFor="question" className="block text-gray-700 font-medium mb-2">Your Question</label>
-                <textarea 
-                  id="question"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  rows={6}
-                  placeholder="Describe your legal issue in detail..."
-                  value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
-                  required
-                  disabled={isSubmitting}
-                ></textarea>
-              </div>
-              
-              <div className="text-center">
-                <Button 
-                  type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 disabled:opacity-50"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Submitting...' : 'Submit Question'}
-                </Button>
-              </div>
-            </form>
           </div>
         </div>
-      </section>
+      </main>
 
       <footer className="bg-slate-900 text-white py-6">
         <div className="container mx-auto px-4 text-center">
@@ -109,6 +83,4 @@ const AskQuestionPage = () => {
       </footer>
     </div>
   );
-};
-
-export default AskQuestionPage;
+}
