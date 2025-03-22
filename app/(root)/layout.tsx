@@ -16,7 +16,7 @@ export default async function Layout({
             <SidebarMain />
             <section className="relative w-full lg:w-[calc(100-16rem)]">
                 <Nav />
-                <div className="px-2 md:px-6 lg:px-10 py-4 max-w-7xl mx-auto">
+                <div className="px-2 md:px-6 lg:px-10 py-4 min-h-[calc(100vh-4rem)] max-w-7xl mx-auto">
                     {children}
                 </div>
             </section>

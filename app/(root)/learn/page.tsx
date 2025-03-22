@@ -1,9 +1,12 @@
+import Quiz from '@/components/pages/learn/Quiz'
 import React from 'react'
 
 type Props = {}
 
 export default function page({}: Props) {
   return (
-    <div>learn page</div>
+    <div className='min-h-[200vh]'>
+      <Quiz/>
+    </div>
   )
 }
