@@ -140,9 +140,7 @@ export default async function QuestionDetailPage({ params }: { params: paramsTyp
                       Answered by {answer.user?.name || 'Anonymous'} •{' '}
                       {new Date(answer.created_at).toLocaleDateString()}
                     </span>
-                    <div className="flex items-center">
-                      <span className="mr-4">{answer.upvotes} upvotes</span>
-                    </div>
+              
                   </div>
                 </div>
               ))
