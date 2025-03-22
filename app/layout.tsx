@@ -38,7 +38,6 @@ export default function RootLayout({
         <SessionProvider>
         <PHProvider>
           <ReactQueryProvider>
-           
             <ThemeProvider
               attribute="class"
               defaultTheme="light"
@@ -48,9 +47,7 @@ export default function RootLayout({
                 <main className="h-full   overflow-y-auto custom-scrollbar">
                   <PostHogWrapper />
                   <TopLoader />
-
                   {children}
-
                 </main>
               <Toaster />
             </ThemeProvider>
