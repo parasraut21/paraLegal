@@ -16,8 +16,7 @@ export const EmotionalSupportAssistant = () => {
 
   return (
     <AssistantRuntimeProvider runtime={runtime}>
-      <div className="grid h-[calc(100vh-6rem)] grid-cols-[200px_1fr] gap-x-2 px-4 py-4">
-        <ThreadList />
+      <div className="h-[calc(100vh-6rem)] gap-x-2 px-4 py-4">
         <Thread />
       </div>
     </AssistantRuntimeProvider>
