@@ -14,8 +14,7 @@ export default function useQuizQuestions() {
     queryFn: async () => {
       return await getOrCreateDailyQuiz();
     },
-    staleTime: Infinity, // Data never goes stale during the current date
-    gcTime: 24 * 60 * 60 * 1000, // Garbage collect the data after 24 hours
+    staleTime: 24 * 60 * 60 * 1000,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,

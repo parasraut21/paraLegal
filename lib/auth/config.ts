@@ -53,10 +53,12 @@ export const authConfig = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.id = user.id;
       }
       return token;
     },
     session({ session, token }) {
+      session.userId = token.id as string;
       return session;
     },
   },
