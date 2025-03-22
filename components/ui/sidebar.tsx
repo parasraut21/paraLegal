@@ -3,14 +3,14 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
-import { SquareChevronLeft, SquareChevronRight} from "lucide-react"
+import { Menu, SquareChevronLeft, SquareChevronRight} from "lucide-react"
 
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   Tooltip,
@@ -196,10 +196,11 @@ const Sidebar = React.forwardRef<
     if (isMobile) {
       return (
         <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+          <SheetTitle className="sr-only">Navigation Menu</SheetTitle> 
           <SheetContent
             data-sidebar="sidebar"
             data-mobile="true"
-            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden bg-white"
             style={
               {
                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -291,7 +292,8 @@ return (
     onClick={handleClick} // Use handleClick to manage event
     {...props}
   >
-    {isOpen ? <SquareChevronRight size={30} /> : <SquareChevronLeft size={30} />}
+    <Menu size={30}/>
+    {/* {isOpen ? <SquareChevronRight size={30} /> : <SquareChevronLeft size={30} />} */}
     <span className="sr-only">Toggle Sidebar</span>
   </Button>
 );

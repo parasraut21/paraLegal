@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { PHProvider } from "./providers";
 import PostHogWrapper from "./PostHogWrapper";
 import TopLoader from "./Toploader";
+import { SessionProvider } from "next-auth/react";
 
 import ReactQueryProvider from "@/utils/providers/ReactQueryProvider";
 const defaultUrl = process.env.NEXT_PUBLIC_BASE_URL
@@ -34,9 +35,9 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="500x500" href="/images/icon-1.png" />
       </head>
       <body className="bg-background text-foreground min-h-screen">
+        <SessionProvider>
         <PHProvider>
           <ReactQueryProvider>
-           
             <ThemeProvider
               attribute="class"
               defaultTheme="light"
@@ -46,14 +47,13 @@ export default function RootLayout({
                 <main className="h-full   overflow-y-auto custom-scrollbar">
                   <PostHogWrapper />
                   <TopLoader />
-
                   {children}
-
                 </main>
               <Toaster />
             </ThemeProvider>
           </ReactQueryProvider>
         </PHProvider>
+        </SessionProvider>
       </body>
     </html>
   );
