@@ -2,6 +2,7 @@ import { BookOpen, Brain, HeartHandshake, Home, MessageSquareText } from "lucide
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
 import { auth, signOut } from "@/lib/auth"
 import { Button } from "../ui/button"
+import Link from "next/link"
 
 // Menu items.
 const items = [
@@ -46,10 +47,10 @@ export async function SidebarMain() {
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
+                                        <Link href={item.url}>
                                             <item.icon />
                                             <span>{item.title}</span>
-                                        </a>
+                                        </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}
