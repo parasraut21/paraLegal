@@ -8,7 +8,7 @@ export default function page({}: Props) {
   return (
     <div className='min-h-[200vh]'>
       <News/>
-      {/* <Quiz/> */}
+      <Quiz/>
     </div>
   )
 }
