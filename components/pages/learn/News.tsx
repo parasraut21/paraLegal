@@ -2,20 +2,45 @@
 import useGetNews from '@/hooks/tanstack/getNews'
 import React from 'react'
 import Link from 'next/link'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function News() {
   const { data, isLoading, isError } = useGetNews()
 
   if (isLoading) {
-    return <div className="p-4 text-center text-gray-300">Loading news articles...</div>
+    return (
+      <div className="container mx-auto p-4">
+        <Skeleton className="h-8 w-1/3 mb-6" />
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3].map((skeleton) => (
+            <div
+              key={skeleton}
+              className="bg-[#0a0a12]/90 backdrop-blur-sm border border-primary/20 rounded-lg shadow-[0_0_15px_rgba(0,240,255,0.15)] overflow-hidden p-4"
+            >
+              <Skeleton className="h-6 w-full mb-2" />
+              <Skeleton className="h-4 w-full mb-3" />
+              <Skeleton className="h-4 w-1/2" />
+            </div>
+          ))}
+        </div>
+      </div>
+    )
   }
 
   if (isError) {
-    return <div className="p-4 text-center text-red-500">Error loading news. Please try again later.</div>
+    return (
+      <div className="p-4 text-center text-red-500">
+        Error loading news. Please try again later.
+      </div>
+    )
   }
 
   if (!data || data.length === 0) {
-    return <div className="p-4 text-center text-gray-300">No news articles found.</div>
+    return (
+      <div className="p-4 text-center text-gray-300">
+        No news articles found.
+      </div>
+    )
   }
 
   return (
@@ -58,18 +83,30 @@ export default function News() {
                   </div>
 
                   <div className="mb-2">
-                    <h3 className="text-sm font-semibold text-gray-300">Impact</h3>
-                    <p className="text-sm text-gray-400">{newsItem.analysis.impact}</p>
+                    <h3 className="text-sm font-semibold text-gray-300">
+                      Impact
+                    </h3>
+                    <p className="text-sm text-gray-400">
+                      {newsItem.analysis.impact}
+                    </p>
                   </div>
 
                   <div className="mb-2">
-                    <h3 className="text-sm font-semibold text-gray-300">Insights</h3>
-                    <p className="text-sm text-gray-400">{newsItem.analysis.insights}</p>
+                    <h3 className="text-sm font-semibold text-gray-300">
+                      Insights
+                    </h3>
+                    <p className="text-sm text-gray-400">
+                      {newsItem.analysis.insights}
+                    </p>
                   </div>
 
                   <div>
-                    <h3 className="text-sm font-semibold text-gray-300">Suggestions</h3>
-                    <p className="text-sm text-gray-400">{newsItem.analysis.suggestions}</p>
+                    <h3 className="text-sm font-semibold text-gray-300">
+                      Suggestions
+                    </h3>
+                    <p className="text-sm text-gray-400">
+                      {newsItem.analysis.suggestions}
+                    </p>
                   </div>
                 </div>
               )}

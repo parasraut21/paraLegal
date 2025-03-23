@@ -88,10 +88,10 @@ export async function SidebarMain() {
           </SidebarGroupContent>
           <SidebarFooter className="mt-auto px-6 py-4 border-t border-primary/20 ">
             {session ? (
-              <div className="space-y-2 flex items-center gap-4">
-                <p className="text-right text-gray-200">{session.user.name}</p>
+              <div className="space-y-2 flex items-baseline gap-4">
+                <p className="text-right text-gray-200">{session?.user?.name?.split(" ")[0]}</p>
                 <form
-                  className="flex items-center justify-end"
+                  className="flex items-center "
                   action={async () => {
                     "use server";
                     await signOut();

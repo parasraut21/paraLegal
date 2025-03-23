@@ -3,7 +3,6 @@
 import { submitLegalAnswer } from '@/actions/threads/legal-questions';
 import { useState } from 'react';
 
-
 export default function AnswerForm({ questionId }: { questionId: string }) {
   const [answer, setAnswer] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,20 +40,20 @@ export default function AnswerForm({ questionId }: { questionId: string }) {
   return (
     <form onSubmit={handleSubmit}>
       {error && (
-        <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-lg">
+        <div className="mb-6 p-4 bg-red-900 border border-red-500 text-red-300 rounded-lg">
           {error}
         </div>
       )}
       
       {success && (
-        <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg">
+        <div className="mb-6 p-4 bg-green-900 border border-green-500 text-green-300 rounded-lg">
           Your answer has been submitted successfully!
         </div>
       )}
       
       <div className="mb-6">
         <textarea 
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-3 bg-[#131320] border border-primary/30 rounded-lg focus:outline-none focus:ring-primary focus:border-primary placeholder:text-gray-500 text-gray-100"
           rows={6}
           placeholder="Write your answer here..."
           value={answer}
@@ -67,7 +66,7 @@ export default function AnswerForm({ questionId }: { questionId: string }) {
       <div className="text-center">
         <button 
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 disabled:opacity-50"
+          className="bg-primary hover:bg-primary/80 text-[#0a0a12] font-bold py-3 px-8 rounded-lg transition duration-300 disabled:opacity-50"
           disabled={isSubmitting}
         >
           {isSubmitting ? 'Submitting...' : 'Post Your Answer'}

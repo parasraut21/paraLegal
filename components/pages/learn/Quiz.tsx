@@ -1,12 +1,40 @@
 "use client"
 import useQuizQuestions from '@/hooks/tanstack/getQuizQuestions';
 import React, { useState } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Quiz() {
   const { data, isLoading, isError } = useQuizQuestions();
   const [answeredQuestions, setAnsweredQuestions] = useState<Record<number, number>>({});
 
-  if (isLoading) return <div className="p-4 text-center text-gray-300">Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#050508] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0a0a15] via-[#050508] to-[#030305] bg-fixed relative p-4">
+        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-repeat opacity-10 pointer-events-none"></div>
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <Skeleton className="h-8 w-1/2 mb-6" />
+          <div className="space-y-6">
+            {[1, 2, 3].map((skeleton) => (
+              <div
+                key={skeleton}
+                className="p-6 bg-[#0a0a12]/90 backdrop-blur-sm border border-primary/20 rounded-lg shadow-[0_0_15px_rgba(0,240,255,0.15)]"
+              >
+                <Skeleton className="h-6 w-full mb-4" />
+                <ul className="space-y-2">
+                  {[1, 2, 3, 4].map((option) => (
+                    <li key={option} className="p-2 rounded bg-[#131320] text-gray-100">
+                      <Skeleton className="h-4 w-3/4" />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   if (isError) return <div className="p-4 text-center text-red-500">Error fetching quiz questions</div>;
   if (!data || !data.quizQuestions) return <div className="p-4 text-center text-gray-300">No quiz questions found</div>;
 
