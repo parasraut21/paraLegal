@@ -5,6 +5,7 @@ import {
   Home,
   MessageSquareText,
   Languages,
+  User2
 } from "lucide-react";
 import {
   Sidebar,
@@ -57,7 +58,7 @@ const items = [
   {
     title: "Profile",
     url: "/profile",
-    icon: Home,
+    icon: User2,
   },
 ];
 
