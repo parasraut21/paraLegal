@@ -20,6 +20,7 @@ import {
 import { auth, signOut } from "@/lib/auth";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 // Menu items.
 const items = [
@@ -69,10 +70,17 @@ export async function SidebarMain() {
     >
       <SidebarContent className="p-4">
         <SidebarGroup className="h-full bg-[#0a0a12]/90 backdrop-blur-sm border border-primary/20 rounded-lg shadow-[0_0_15px_rgba(0,240,255,0.15)]">
-          <SidebarHeader className="px-6 py-4">
-            <h1 className="text-3xl font-bold text-primary">Para Legal</h1>
-          </SidebarHeader>
-          <SidebarGroupContent className="pt-6 px-6">
+            <SidebarHeader className="flex justify-start items-start   ">
+            <Image
+              src='/logo3.png'
+              width={1000}
+              height={1000}
+              alt="logo"
+              className=""
+            />
+            {/* <h1 className="text-3xl font-bold text-primary">Para Legal</h1> */}
+            </SidebarHeader>
+          <SidebarGroupContent className="pt-6 px-6 -mt-12">
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>

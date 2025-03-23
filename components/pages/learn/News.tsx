@@ -47,7 +47,7 @@ export default function News() {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-6 text-gray-100">Legal News</h1>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
         {data.map((newsItem, index) => (
           <div
             key={index}
