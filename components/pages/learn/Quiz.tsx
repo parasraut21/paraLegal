@@ -6,7 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 export default function Quiz() {
   const { data, isLoading, isError } = useQuizQuestions();
   const [answeredQuestions, setAnsweredQuestions] = useState<Record<number, number>>({});
-
+  console.log(data)
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#050508] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0a0a15] via-[#050508] to-[#030305] bg-fixed relative p-4">
