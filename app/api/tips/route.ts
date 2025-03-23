@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   const { userProfile, existingTips } = await req.json();
 
   // Define the schema for the response
-  const tipsSchema = z.array(z.string()).length(5);
+  const tipsSchema = z.array(z.string()).length(10);
 
   // Generate tips based on user profile and existing tips
   const { object: generatedTips } = await generateObject({
