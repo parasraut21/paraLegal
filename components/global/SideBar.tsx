@@ -44,7 +44,7 @@ const items = [
     icon: MessageSquareText,
   },
   {
-    title: "Ai Support",
+    title: "Emotional Support",
     url: "/ai-support",
     icon: HeartHandshake,
   },
