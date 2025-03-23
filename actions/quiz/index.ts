@@ -85,7 +85,6 @@ export async function getOrCreateDailyQuiz() {
       orderBy: {
         created_at: "desc",
       },
-      take: 1,
     });
 
     // If quiz exists for today, return it
