@@ -77,7 +77,7 @@ export default function Quiz() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050508] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0a0a15] via-[#050508] to-[#030305] bg-fixed relative p-4">
+    <div id='quiz' className="min-h-screen bg-[#050508] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0a0a15] via-[#050508] to-[#030305] bg-fixed relative p-4">
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-repeat opacity-10 pointer-events-none"></div>
       <div className="relative z-10 max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold mb-6 text-gray-100">Today's Legal Quiz</h1>

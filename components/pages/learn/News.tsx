@@ -9,7 +9,7 @@ export default function News() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-4">
+      <div id='news' className="container mx-auto p-4">
         <Skeleton className="h-8 w-1/3 mb-6" />
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map((skeleton) => (
