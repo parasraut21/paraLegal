@@ -77,11 +77,6 @@ export async function getOrCreateDailyQuiz() {
   try {
     // Check if a quiz was already created today
     const existingQuiz = await db.quiz.findFirst({
-      where: {
-        created_at: {
-          gte: new Date(getTodayDate()),
-        },
-      },
       orderBy: {
         created_at: "desc",
       },
