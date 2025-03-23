@@ -28,11 +28,11 @@ const items = [
     url: "/dashboard",
     icon: Home,
   },
-  {
-    title: "Ai Chat",
-    url: "/ai-chat",
-    icon: Brain,
-  },
+  // {
+  //   title: "Ai Chat",
+  //   url: "/ai-chat",
+  //   icon: Brain,
+  // },
   {
     title: "Learnings",
     url: "/learn",
