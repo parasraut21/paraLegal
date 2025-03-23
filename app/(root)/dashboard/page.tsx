@@ -1,6 +1,7 @@
 "use client"
 import CarouselBanner from "@/components/carousel-banner"
 import PersonalizedRecommendations from "@/components/Recommandation"
+import Link from "next/link"
 
 export default function HomePage() {
   return (
@@ -26,18 +27,18 @@ export default function HomePage() {
               Understand your rights, ask questions, and get guidance on legal matters that affect your everyday life.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a
-                href="/questions"
+              <Link
+                href="/threads"
                 className="px-6 py-3 bg-primary text-[#0a0a12] font-medium rounded-md hover:bg-primary/80 hover:shadow-[0_0_10px_rgba(0,240,255,0.5)] transition-all"
               >
                 Browse Questions
-              </a>
-              <a
-                href="/ask"
+              </Link>
+              <Link
+                href="/threads/new"
                 className="px-6 py-3 bg-[#131320] text-gray-200 border border-primary/30 rounded-md hover:bg-[#181830] hover:border-primary/60 transition-all"
               >
                 Ask a Question
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -56,12 +57,12 @@ export default function HomePage() {
                 Test your legal knowledge with our daily quiz. Answer 5 questions on today's topic and improve your
                 understanding.
               </p>
-              <a
-                href="/quiz"
+              <Link
+                href="/learn/#quiz"
                 className="inline-block px-4 py-2 bg-primary text-[#0a0a12] font-medium rounded-md hover:bg-primary/80 hover:shadow-[0_0_10px_rgba(0,240,255,0.5)] transition-all"
               >
                 Start Quiz
-              </a>
+              </Link>
             </div>
           </div>
         </div>
