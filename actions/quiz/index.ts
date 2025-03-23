@@ -66,96 +66,49 @@ function isSameDay(date1: Date, date2: Date): boolean {
 
 // Main server action function
 export async function getOrCreateDailyQuiz() {
-  const session = await auth();
-  if (!session) {
-    return {
+   try {
+     const latestQuiz = await db.quiz.findFirst({
+       orderBy: {
+         created_at: "desc",
+       },
+     });
+     if (!latestQuiz){
+      return {
       success: false,
-      message: "User not authenticated",
+      message: "quiz not found",
       quizQuestions: null,
     };
-  }
+     }
+     const questions  = await db.quizQuestions.findMany({
+       where: { id :{
+        in: latestQuiz.questions,
+       } },
+     });
+     return {
+      success: true,
+      message: "quiz found",
+      quizQuestions: questions,
+     }
+   } catch (error) {
+     console.error("Error fetching latest quiz:", error);
+     return {
+      success: false,
+      message: "error while getting quiz",
+      quizQuestions: null,
+     }
+   }
+}
+
+export const getLastestQuiz = async () => {
   try {
-    // Check if a quiz was already created today
-    const existingQuiz = await db.quiz.findFirst({
+    const latestQuiz = await db.quiz.findFirst({
       orderBy: {
         created_at: "desc",
       },
     });
-
-    // If quiz exists for today, return it
-    if (existingQuiz && isSameDay(existingQuiz.created_at, new Date())) {
-      const existingQuizQuestions = await db.quizQuestions.findMany({
-        where: {
-          id: {
-            in: existingQuiz.questions,
-          },
-        },
-      });
-
-      return {
-        success: true,
-        message: "Today's quiz found",
-        quizQuestions: existingQuizQuestions,
-      };
-    }
-
-    // If no quiz exists, create a new one
-    // 1. Determine today's topic
-    const todaysTopic = getTopicForDay();
-
-    const lastExistingQuizQuestions = await db.quizQuestions.findMany({
-      where: {
-        id: {
-          in: existingQuiz?.questions,
-        },
-      },
-    });
-    // 2. Fetch questions from API
-    const apiQuestions = await fetchQuestionsFromAPI(todaysTopic);
-    if (apiQuestions && apiQuestions.length === 0) {
-      return {
-        success: true,
-        message: "generating quiz failed , returning esisting quiz",
-        quizQuestions: lastExistingQuizQuestions,
-      };
-    }
-    // 3. Store questions in QuizQuestions table
-    const createdQuestions = await Promise.all(
-      apiQuestions.map(async (question) => {
-        return await db.quizQuestions.create({
-          data: {
-            question: question.question,
-            option1: question.options[0],
-            option2: question.options[1],
-            option3: question.options[2],
-            option4: question.options[3],
-            correct: question.correctIndex,
-            explanation: question.explanation,
-            topic: todaysTopic,
-          },
-        });
-      })
-    );
-
-    // 4. Create new quiz with question IDs
-    await db.quiz.create({
-      data: {
-        questions: createdQuestions.map((q) => q.id),
-      },
-    });
-
-    return {
-      success: true,
-      message: "New quiz created for today",
-      quizQuestions: createdQuestions,
-    };
+    return latestQuiz;
   } catch (error) {
-    console.error("Error in getOrCreateDailyQuiz:", error);
-    return {
-      success: false,
-      message:
-        error instanceof Error ? error.message : "Unknown error occurred",
-      quizQuestions: null,
-    };
+    console.error("Error fetching latest quiz:", error);
+    return null;
   }
-}
+};
