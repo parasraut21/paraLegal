@@ -2,7 +2,7 @@
 
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/auth/db";
-import {  LegalTopics } from "@prisma/client";
+import { LegalTopics } from "@prisma/client";
 
 // Function to get today's date in the format 'YYYY-MM-DD'
 function getTodayDate() {
@@ -44,19 +44,19 @@ async function fetchQuestionsFromAPI(topic: LegalTopics): Promise<any[]> {
     );
 
     if (!response.ok) {
-      throw new Error(`API request failed with status: ${response.status}`);
+      return [];
     }
 
     const data = await response.json();
     return data.questions;
   } catch (error) {
     console.error("Error fetching questions:", error);
-    throw error;
+    return [];
   }
 }
 
 function isSameDay(date1: Date, date2: Date): boolean {
-  console.log(date1.getDate() , date2.getDate());
+  console.log(date1.getDate(), date2.getDate());
   return (
     date1.getFullYear() === date2.getFullYear() &&
     date1.getMonth() === date2.getMonth() &&
@@ -108,9 +108,22 @@ export async function getOrCreateDailyQuiz() {
     // 1. Determine today's topic
     const todaysTopic = getTopicForDay();
 
+    const lastExistingQuizQuestions = await db.quizQuestions.findMany({
+      where: {
+        id: {
+          in: existingQuiz?.questions,
+        },
+      },
+    });
     // 2. Fetch questions from API
     const apiQuestions = await fetchQuestionsFromAPI(todaysTopic);
-
+    if (apiQuestions && apiQuestions.length === 0) {
+      return {
+        success: true,
+        message: "generating quiz failed , returning esisting quiz",
+        quizQuestions: lastExistingQuizQuestions,
+      };
+    }
     // 3. Store questions in QuizQuestions table
     const createdQuestions = await Promise.all(
       apiQuestions.map(async (question) => {
@@ -151,5 +164,3 @@ export async function getOrCreateDailyQuiz() {
     };
   }
 }
-
-
