@@ -1,10 +1,21 @@
 "use client"
+import CarouselBanner from "@/components/carousel-banner"
 import PersonalizedRecommendations from "@/components/Recommandation"
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#050508] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0a0a15] via-[#050508] to-[#030305] bg-fixed">
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-repeat opacity-10 pointer-events-none"></div>
+
+      {/* Full-width carousel banner */}
+      <CarouselBanner 
+        images={[
+          { src: "/1.webp", alt: "Legal services banner" },
+          { src: "/2.webp", alt: "Legal advice banner" },
+          { src: "/3.webp", alt: "Legal resources banner" },
+        ]}
+      />
+
       <main className="py-12 relative z-10">
         <div className="container mx-auto px-4">
           <div className="bg-[#0a0a12]/90 backdrop-blur-sm border border-primary/20 rounded-lg shadow-[0_0_15px_rgba(0,240,255,0.15)] p-8 mb-8 text-center">
